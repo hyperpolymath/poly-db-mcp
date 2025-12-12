@@ -1,134 +1,196 @@
 # Polyglot DB MCP
 
-Unified MCP server for 16 databases. One interface to query them all.
+**One MCP server. 16 databases. Zero context switching.**
 
-**Primary Language:** ReScript (compiles to JavaScript, runs on Deno)
+Query PostgreSQL, MongoDB, Neo4j, Elasticsearch, Redis, and 11 more databases through a single unified interface. Built with ReScript, runs on Deno.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Runtime: Deno](https://img.shields.io/badge/Runtime-Deno-black.svg)](https://deno.land)
+[![Language: ReScript](https://img.shields.io/badge/Language-ReScript-red.svg)](https://rescript-lang.org)
+
+---
+
+## Why Polyglot DB?
+
+Modern applications use multiple databases — SQL for transactions, Redis for caching, Elasticsearch for search, vectors for AI. Switching between CLIs, APIs, and query languages is exhausting.
+
+**Polyglot DB MCP** gives Claude (and other MCP clients) direct access to all your databases through natural language:
+
+> "Find all users in PostgreSQL who signed up last week, then check if they're in the Redis cache"
+
+> "Search Elasticsearch for 'authentication errors' and correlate with the MongoDB audit log"
+
+> "Store this embedding in Qdrant and link it to the Neo4j knowledge graph"
+
+---
+
+## Quick Start
+
+### 1. Add to Claude Code
+
+```bash
+claude mcp add polyglot-db -- deno run \
+  --allow-net --allow-read --allow-write --allow-env \
+  /path/to/polyglot-db-mcp/index.js
+```
+
+### 2. Configure your databases
+
+Create a `.env` file or export environment variables:
+
+```bash
+# Example: PostgreSQL + Redis + Elasticsearch
+export POSTGRES_HOST=localhost POSTGRES_DATABASE=myapp
+export DRAGONFLY_HOST=localhost
+export ELASTICSEARCH_URL=http://localhost:9200
+```
+
+### 3. Ask Claude
+
+```
+"What databases are connected?"
+"Show me the schema of the users table in PostgreSQL"
+"Cache this result in Redis with a 1 hour TTL"
+```
+
+---
 
 ## Supported Databases
 
-### Relational Databases
+### Relational
 
-| Database | License | Description | Tools |
-|----------|---------|-------------|-------|
-| **PostgreSQL** | PostgreSQL License (FOSS) | The world's most advanced open-source relational database. Excellent for complex queries, ACID compliance, and extensibility via extensions like PostGIS, pgvector | `pg_*` |
-| **MariaDB** | GPL v2 (FOSS) | Community-developed fork of MySQL. Drop-in MySQL replacement with better performance and new features. Ideal for web applications | `maria_*` |
-| **SQLite** | Public Domain (FOSS) | Self-contained, serverless, embedded SQL database. Perfect for local storage, mobile apps, and single-file databases | `sqlite_*` |
+| Database | License | Best For | Tools |
+|----------|---------|----------|-------|
+| **PostgreSQL** | PostgreSQL (FOSS) | Complex queries, ACID, extensions (PostGIS, pgvector) | `pg_*` |
+| **MariaDB** | GPL v2 (FOSS) | Web apps, MySQL compatibility | `maria_*` |
+| **SQLite** | Public Domain | Local storage, embedded, single-file | `sqlite_*` |
 
-### Document Databases
+### Document
 
-| Database | License | Description | Tools |
-|----------|---------|-------------|-------|
-| **MongoDB** | SSPL (Source-Available) | Leading document database for JSON-like documents. Flexible schemas, horizontal scaling, powerful aggregation pipeline | `mongo_*` |
-| **SurrealDB** | BSL/Apache 2.0 (FOSS) | Multi-model database combining documents, graphs, and SQL. Real-time subscriptions, embedded and server modes | `surreal_*` |
+| Database | License | Best For | Tools |
+|----------|---------|----------|-------|
+| **MongoDB** | SSPL | Flexible schemas, horizontal scaling | `mongo_*` |
+| **SurrealDB** | BSL/Apache 2.0 | Multi-model (doc + graph + SQL) | `surreal_*` |
 
-### Graph Databases
+### Graph
 
-| Database | License | Description | Tools |
-|----------|---------|-------------|-------|
-| **Neo4j** | GPL v3 / Commercial | Industry-leading graph database. Cypher query language for traversing relationships. Social networks, recommendations, fraud detection | `neo4j_*` |
+| Database | License | Best For | Tools |
+|----------|---------|----------|-------|
+| **Neo4j** | GPL v3 / Commercial | Relationships, social networks, fraud detection | `neo4j_*` |
 
-### Key-Value & Cache
+### Cache & Key-Value
 
-| Database | License | Description | Tools |
-|----------|---------|-------------|-------|
-| **Dragonfly** | BSL (Source-Available) | Modern Redis replacement with 25x better performance. Drop-in compatible, multi-threaded architecture | `dragonfly_*` |
-| **Memcached** | BSD (FOSS) | Simple, distributed memory caching. Session storage, page caching, reducing database load | `memcached_*` |
-| **LMDB** | OpenLDAP Public License (FOSS) | Lightning Memory-Mapped Database. Embedded key-value store with ACID transactions. Uses Deno.Kv backend | `lmdb_*` |
+| Database | License | Best For | Tools |
+|----------|---------|----------|-------|
+| **Dragonfly** | BSL | Redis replacement, 25x faster | `dragonfly_*` |
+| **Memcached** | BSD (FOSS) | Simple distributed caching | `memcached_*` |
+| **LMDB** | OpenLDAP (FOSS) | Embedded KV with ACID | `lmdb_*` |
 
-### Search Engines
+### Search
 
-| Database | License | Description | Tools |
-|----------|---------|-------------|-------|
-| **Elasticsearch** | Elastic License 2.0 (Source-Available) | Distributed search and analytics engine. Full-text search, log analytics, APM. Powers search for major websites | `es_*` |
-| **Meilisearch** | MIT (FOSS) | Lightning-fast, typo-tolerant search engine. Instant search experiences, easy to set up and use | `meili_*` |
+| Database | License | Best For | Tools |
+|----------|---------|----------|-------|
+| **Elasticsearch** | Elastic License 2.0 | Full-text search, log analytics | `es_*` |
+| **Meilisearch** | MIT (FOSS) | Instant, typo-tolerant search | `meili_*` |
 
-### Vector Databases
+### Vector
 
-| Database | License | Description | Tools |
-|----------|---------|-------------|-------|
-| **Qdrant** | Apache 2.0 (FOSS) | Vector similarity search engine. Store and search embeddings for AI/ML applications, semantic search, recommendations | `qdrant_*` |
+| Database | License | Best For | Tools |
+|----------|---------|----------|-------|
+| **Qdrant** | Apache 2.0 (FOSS) | AI embeddings, semantic search | `qdrant_*` |
 
-### Time Series Databases
+### Time Series
 
-| Database | License | Description | Tools |
-|----------|---------|-------------|-------|
-| **InfluxDB** | MIT (FOSS, v1.x) / Proprietary (v2.x Cloud) | Purpose-built for time series data. IoT, monitoring, real-time analytics. Flux query language | `influx_*` |
+| Database | License | Best For | Tools |
+|----------|---------|----------|-------|
+| **InfluxDB** | MIT (v1) | IoT, monitoring, metrics | `influx_*` |
 
-### Analytics Databases
+### Analytics
 
-| Database | License | Description | Tools |
-|----------|---------|-------------|-------|
-| **DuckDB** | MIT (FOSS) | In-process OLAP database. Query CSV, Parquet, JSON directly. SQLite for analytics | `duck_*` |
+| Database | License | Best For | Tools |
+|----------|---------|----------|-------|
+| **DuckDB** | MIT (FOSS) | OLAP, query CSV/Parquet/JSON directly | `duck_*` |
 
-### Specialized Databases
+### Specialized
 
-| Database | License | Description | Tools |
-|----------|---------|-------------|-------|
-| **XTDB** | MIT (FOSS) | Bitemporal database with immutable history. Point-in-time queries, audit trails, compliance. Datalog queries | `xtdb_*` |
-| **iTop** | AGPL v3 (FOSS) | IT Service Management CMDB. Track IT assets, tickets, changes. Configuration management database | `itop_*` |
+| Database | License | Best For | Tools |
+|----------|---------|----------|-------|
+| **XTDB** | MIT (FOSS) | Bitemporal queries, audit trails | `xtdb_*` |
+| **iTop** | AGPL v3 (FOSS) | IT asset management, CMDB | `itop_*` |
 
-### License Legend
+**License Key:** FOSS = Free & Open Source | Source-Available = viewable but restricted
 
-- **FOSS**: Free and Open Source Software
-- **Source-Available**: Source code viewable but with usage restrictions
-- **Proprietary**: Closed source, commercial license required
-
-## Installation
-
-### Add to Claude Code
-
-```bash
-claude mcp add polyglot-db deno run --allow-net --allow-read --allow-write --allow-env /path/to/polyglot-db-mcp/index.js
-```
-
-### Run directly
-
-```bash
-deno task start
-```
+---
 
 ## Configuration
 
-Set environment variables for each database you want to use:
+Each database reads from environment variables. Only configure what you need.
 
-### PostgreSQL
+<details>
+<summary><b>PostgreSQL</b></summary>
+
 ```bash
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_DATABASE=mydb
 POSTGRES_USER=postgres
-POSTGRES_PASSWORD=
+POSTGRES_PASSWORD=secret
 ```
+</details>
 
-### MongoDB
+<details>
+<summary><b>MongoDB</b></summary>
+
 ```bash
 MONGODB_URL=mongodb://localhost:27017
 MONGODB_DATABASE=mydb
 ```
+</details>
 
-### Neo4j
+<details>
+<summary><b>Neo4j</b></summary>
+
 ```bash
 NEO4J_URL=bolt://localhost:7687
 NEO4J_USERNAME=neo4j
-NEO4J_PASSWORD=
+NEO4J_PASSWORD=secret
 ```
+</details>
 
-### Elasticsearch
+<details>
+<summary><b>Elasticsearch</b></summary>
+
 ```bash
 ELASTICSEARCH_URL=http://localhost:9200
-ELASTICSEARCH_USERNAME=         # optional
-ELASTICSEARCH_PASSWORD=         # optional
+ELASTICSEARCH_USERNAME=elastic    # optional
+ELASTICSEARCH_PASSWORD=secret     # optional
 ```
+</details>
 
-### InfluxDB
+<details>
+<summary><b>Dragonfly / Redis</b></summary>
+
+```bash
+DRAGONFLY_HOST=localhost
+DRAGONFLY_PORT=6379
+DRAGONFLY_PASSWORD=             # optional
+```
+</details>
+
+<details>
+<summary><b>InfluxDB</b></summary>
+
 ```bash
 INFLUXDB_URL=http://localhost:8086
 INFLUXDB_TOKEN=your-token
 INFLUXDB_ORG=your-org
 INFLUXDB_BUCKET=your-bucket
 ```
+</details>
 
-### SurrealDB
+<details>
+<summary><b>SurrealDB</b></summary>
+
 ```bash
 SURREAL_URL=http://localhost:8000
 SURREAL_NAMESPACE=test
@@ -136,157 +198,191 @@ SURREAL_DATABASE=test
 SURREAL_USERNAME=root
 SURREAL_PASSWORD=root
 ```
+</details>
 
-### Dragonfly/Redis
+<details>
+<summary><b>SQLite</b></summary>
+
 ```bash
-DRAGONFLY_HOST=localhost
-DRAGONFLY_PORT=6379
-DRAGONFLY_PASSWORD=       # optional
+SQLITE_PATH=./data.db     # or :memory:
 ```
+</details>
 
-### XTDB
-```bash
-XTDB_URL=http://localhost:3000
-```
+<details>
+<summary><b>DuckDB</b></summary>
 
-### SQLite
-```bash
-SQLITE_PATH=./data.db     # or :memory: for in-memory
-```
-
-### DuckDB
 ```bash
 DUCKDB_PATH=./analytics.db  # or :memory:
 ```
+</details>
 
-### Qdrant
+<details>
+<summary><b>Qdrant</b></summary>
+
 ```bash
 QDRANT_URL=http://localhost:6333
-QDRANT_API_KEY=            # optional
+QDRANT_API_KEY=               # optional
 ```
+</details>
 
-### Meilisearch
+<details>
+<summary><b>Meilisearch</b></summary>
+
 ```bash
 MEILISEARCH_URL=http://localhost:7700
-MEILISEARCH_API_KEY=       # optional
+MEILISEARCH_API_KEY=          # optional
 ```
+</details>
 
-### MariaDB
+<details>
+<summary><b>MariaDB</b></summary>
+
 ```bash
 MARIADB_HOST=localhost
 MARIADB_PORT=3306
 MARIADB_USER=root
-MARIADB_PASSWORD=
+MARIADB_PASSWORD=secret
 MARIADB_DATABASE=mydb
 ```
+</details>
 
-### Memcached
+<details>
+<summary><b>Memcached</b></summary>
+
 ```bash
 MEMCACHED_SERVERS=localhost:11211
 ```
+</details>
 
-### LMDB
+<details>
+<summary><b>LMDB</b></summary>
+
 ```bash
 LMDB_PATH=./lmdb-data
 ```
+</details>
 
-### iTop
+<details>
+<summary><b>XTDB</b></summary>
+
+```bash
+XTDB_URL=http://localhost:3000
+```
+</details>
+
+<details>
+<summary><b>iTop</b></summary>
+
 ```bash
 ITOP_URL=http://localhost/itop
 ITOP_USERNAME=admin
-ITOP_PASSWORD=
+ITOP_PASSWORD=secret
+```
+</details>
+
+---
+
+## Usage Examples
+
+### Meta Tools
+
+```
+db_list              List all 16 supported databases
+db_status            Check which databases are currently connected
+db_help [database]   Get available tools for a specific database
 ```
 
-## Usage
+### Natural Language Queries
 
-### Unified Tools
+Ask Claude things like:
 
-```
-db_list          - List all available databases
-db_status        - Check which databases are connected
-db_help          - Get help for a specific database
-```
+**PostgreSQL:**
+> "Create a users table with id, email, and created_at columns"
+> "Find all orders over $100 from the last month"
 
-### Example Prompts
+**MongoDB:**
+> "Insert a new document into the products collection"
+> "Aggregate sales by category with a $match and $group pipeline"
 
-Ask Claude:
+**Neo4j:**
+> "Find the shortest path between User:alice and User:bob"
+> "Show all nodes connected to the 'Engineering' department"
 
-- "What databases do I have connected?"
-- "Query all users from PostgreSQL where status = 'active'"
-- "Find documents in MongoDB where age > 25"
-- "Search for 'authentication' in Elasticsearch"
-- "Find similar vectors to this embedding in Qdrant"
-- "Run this SQL on DuckDB: SELECT * FROM 'data.csv'"
-- "Get the history of document X from XTDB"
-- "Write time series data to InfluxDB"
-- "Find paths between nodes A and B in Neo4j"
+**Elasticsearch:**
+> "Search for documents containing 'critical error' in the logs index"
+> "Get the mapping for the products index"
+
+**Redis/Dragonfly:**
+> "Set user:123:session with a 30 minute TTL"
+> "Get all keys matching cache:*"
+
+**Qdrant:**
+> "Search for vectors similar to this embedding in the documents collection"
+> "Create a new collection with 1536 dimensions for OpenAI embeddings"
+
+**Cross-Database:**
+> "Query users from PostgreSQL and cache the result in Redis"
+> "Find products in MongoDB and index them in Meilisearch"
+
+---
 
 ## Architecture
 
 ```
 polyglot-db-mcp/
-├── index.js                    # Main MCP server entry point
-├── deno.json                   # Deno configuration
-├── rescript.json               # ReScript compiler config
-├── package.json                # Node dependencies (for ReScript)
-├── src/                        # ReScript source (primary)
-│   ├── Adapter.res             # Common adapter types
-│   ├── bindings/               # ReScript FFI bindings
-│   │   ├── Deno.res
-│   │   ├── Postgres.res
-│   │   ├── MongoDB.res
-│   │   ├── Redis.res
-│   │   ├── SQLite.res
-│   │   └── ...
-│   └── adapters/               # ReScript adapters (core)
-│       ├── Postgresql.res
-│       ├── Mongodb.res
-│       ├── Sqlite.res
-│       ├── Dragonfly.res
-│       └── Elasticsearch.res
+├── index.js                    # MCP server entry point
+├── src/                        # ReScript source (core adapters)
+│   ├── Adapter.res             # Shared types
+│   ├── bindings/               # Database client FFI
+│   └── adapters/               # PostgreSQL, MongoDB, SQLite, Dragonfly, Elasticsearch
+├── adapters/                   # JavaScript adapters (exotic databases)
 ├── lib/es6/                    # Compiled ReScript output
-├── adapters/                   # JavaScript adapters (legacy, v1.x)
-│   ├── surrealdb.js
-│   ├── neo4j.js
-│   ├── influxdb.js
-│   └── ...
-├── STATE.scm                   # Project state (Guile Scheme)
-├── META.scm                    # Architectural decisions
-└── ECOSYSTEM.scm               # Related projects
+└── STATE.scm                   # Project state tracking
 ```
 
-## Language Policy
+### Language Policy
 
-This project is transitioning from JavaScript to **ReScript** for type safety:
+| Component | Language | Rationale |
+|-----------|----------|-----------|
+| Core adapters (5) | ReScript | Type safety, smaller bundles |
+| Exotic adapters (11) | JavaScript | Pragmatic for v1.x |
+| Future (v2.0.0) | 100% ReScript | RSR Gold compliance |
 
-| Version | Language Mix |
-|---------|--------------|
-| v1.x | Core adapters in ReScript, exotic adapters in JavaScript |
-| v2.0.0 | 100% ReScript |
+**TypeScript is prohibited.** We chose ReScript for its superior type inference and ML heritage.
 
-**TypeScript is explicitly prohibited.** ReScript provides superior type inference and smaller bundle sizes.
+---
+
+## Development
 
 ### Building ReScript
 
 ```bash
 npm install           # Install ReScript compiler
-npm run res:build     # Compile ReScript to JavaScript
-npm run res:watch     # Watch mode for development
+npm run res:build     # Compile to JavaScript
+npm run res:watch     # Watch mode
+```
+
+### Running Locally
+
+```bash
+deno task start
+# or
+deno run --allow-net --allow-read --allow-write --allow-env index.js
 ```
 
 ### Git Hooks
 
-Install the pre-commit hook to enforce language policy:
+Enable the pre-commit hook to enforce language policy:
 
 ```bash
 git config core.hooksPath .githooks
 ```
 
-## Adding New Databases
+---
 
-### v2.0.0+ (ReScript)
+## Adding a New Database
 
-Create an adapter in `src/adapters/YourDb.res`:
+Create `src/adapters/YourDb.res`:
 
 ```rescript
 // SPDX-License-Identifier: MIT
@@ -301,58 +397,36 @@ let isConnected = async () => { /* ... */ }
 
 let tools: Js.Dict.t<toolDefAny> = {
   let dict = Js.Dict.empty()
-
   Js.Dict.set(dict, "yourdb_query", {
     description: "Execute a query",
     params: makeParams([("query", stringParam("Query to run"))]),
     handler: queryHandler,
   })
-
   dict
 }
 ```
 
-### v1.x (JavaScript - Legacy)
+Then import in `index.js` and rebuild.
 
-Create an adapter in `adapters/yourdb.js`:
-
-```javascript
-// SPDX-License-Identifier: MIT
-export const name = "yourdb";
-export const description = "Your database description";
-
-export async function connect() { /* ... */ }
-export async function disconnect() { /* ... */ }
-export async function isConnected() { /* ... */ }
-
-export const tools = {
-  yourdb_query: {
-    description: "Execute a query",
-    params: { query: { type: "string", description: "Query to run" } },
-    handler: async ({ query }) => { return { results: [] }; }
-  }
-};
-```
-
-Then import it in `index.js`.
+---
 
 ## Roadmap
 
-| Version | Status | Features |
-|---------|--------|----------|
-| 1.0.0 | Current | 16 databases, core ReScript adapters |
-| 1.1.0 | Planned | Connection pooling, better error handling |
-| 2.0.0 | Vision | 100% ReScript, RSR Gold compliance |
+| Version | Status | Highlights |
+|---------|--------|------------|
+| **1.0.0** | Released | 16 databases, ReScript core, CI/CD |
+| 1.1.0 | Planned | Connection pooling, better errors |
+| 2.0.0 | Vision | 100% ReScript, RSR Gold |
+
+---
 
 ## Related Projects
 
-- [arango-mcp](https://github.com/hyperpolymath/arango-mcp) - ArangoDB MCP server
-- [virtuoso-mcp](https://github.com/hyperpolymath/virtuoso-mcp) - Virtuoso SPARQL MCP server
+- **[arango-mcp](https://github.com/hyperpolymath/arango-mcp)** — ArangoDB MCP server
+- **[virtuoso-mcp](https://github.com/hyperpolymath/virtuoso-mcp)** — Virtuoso SPARQL MCP server
+
+---
 
 ## License
 
-MIT
-
-## Author
-
-Jonathan D.A. Jewell (hyperpolymath)
+MIT — Jonathan D.A. Jewell ([@hyperpolymath](https://github.com/hyperpolymath))
