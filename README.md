@@ -4,7 +4,7 @@
 
 Query PostgreSQL, MongoDB, Neo4j, Elasticsearch, Redis, and 11 more databases through a single unified interface. Built with ReScript, runs on Deno.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License: MIT OR AGPL-3.0](https://img.shields.io/badge/License-MIT%20OR%20AGPL--3.0-blue.svg)](LICENSE.txt)
 [![Runtime: Deno](https://img.shields.io/badge/Runtime-Deno-black.svg)](https://deno.land)
 [![Language: ReScript](https://img.shields.io/badge/Language-ReScript-red.svg)](https://rescript-lang.org)
 
@@ -429,4 +429,8 @@ Then import in `index.js` and rebuild.
 
 ## License
 
-MIT — Jonathan D.A. Jewell ([@hyperpolymath](https://github.com/hyperpolymath))
+**Dual-licensed:** [MIT](LICENSE.txt) OR [AGPL-3.0-or-later](LICENSE.txt) — your choice.
+
+We encourage (but don't require) layering the [Palimpsest License](https://github.com/hyperpolymath/palimpsest-license) for ethical AI development practices.
+
+© 2025 Jonathan D.A. Jewell ([@hyperpolymath](https://github.com/hyperpolymath))

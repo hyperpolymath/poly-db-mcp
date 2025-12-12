@@ -1,6 +1,21 @@
-SPDX-License-Identifier: MIT
+SPDX-License-Identifier: MIT OR AGPL-3.0-or-later
 
-MIT License
+================================================================================
+                              DUAL LICENSE
+================================================================================
+
+This software is dual-licensed. You may choose EITHER:
+
+  1. MIT License (permissive)
+  2. GNU Affero General Public License v3.0 or later (copyleft)
+
+Additionally, we encourage (but do not require) layering the Palimpsest License
+on top of your chosen license for ethical AI development practices.
+See: https://github.com/hyperpolymath/palimpsest-license
+
+================================================================================
+                            OPTION 1: MIT LICENSE
+================================================================================
 
 Copyright (c) 2025 Jonathan D.A. Jewell (hyperpolymath)
 
@@ -21,3 +36,42 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+================================================================================
+                   OPTION 2: GNU AFFERO GENERAL PUBLIC LICENSE
+================================================================================
+
+Copyright (C) 2025 Jonathan D.A. Jewell (hyperpolymath)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+================================================================================
+                         PALIMPSEST LICENSE (ENCOURAGED)
+================================================================================
+
+We encourage adopters to additionally apply the Palimpsest License, which adds
+ethical guidelines for AI-assisted development without restricting the base
+license rights. The Palimpsest License promotes:
+
+  - Transparent AI attribution
+  - Ethical data sourcing
+  - Responsible AI deployment
+  - Community benefit sharing
+
+Learn more: https://github.com/hyperpolymath/palimpsest-license
+
+This is NOT a requirement — the MIT or AGPL license alone is sufficient for
+legal use of this software.
+
+================================================================================
