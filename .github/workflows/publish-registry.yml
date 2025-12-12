@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
+name: Publish to MCP Registry
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 1.1.0)'
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    name: Publish to MCP Registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download mcp-publisher
+        run: |
+          gh release download -R modelcontextprotocol/registry --pattern '*linux*amd64.tar.gz' -D /tmp/mcp-publisher
+          cd /tmp/mcp-publisher && tar -xzf mcp-publisher_linux_amd64.tar.gz
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Update server.json version
+        run: |
+          VERSION="${{ github.event.release.tag_name || github.event.inputs.version }}"
+          VERSION="${VERSION#v}"  # Remove 'v' prefix if present
+          jq --arg v "$VERSION" '.version = $v | .packages[0].version = $v' server.json > server.json.tmp
+          mv server.json.tmp server.json
+          cat server.json
+
+      - name: Authenticate with MCP Registry
+        run: /tmp/mcp-publisher/mcp-publisher login github-oidc
+
+      - name: Publish to MCP Registry
+        run: /tmp/mcp-publisher/mcp-publisher publish
