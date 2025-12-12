@@ -1,0 +1,20 @@
+# Deno
+.deno/
+deno.lock
+
+# Data files
+*.db
+*.sqlite
+lmdb-data/
+
+# Environment
+.env
+.env.*
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+node_modules/
