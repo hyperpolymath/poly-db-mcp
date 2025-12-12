@@ -33,16 +33,18 @@
 
     (project
       (name . "polyglot-db-mcp")
-      (version . "1.0.0")
+      (version . "1.1.0")
       (status . "released")
       (completion . 100)
       (category . "infrastructure")
       (runtime . "Deno")
       (primary-language . "ReScript")
-      (rsr-compliance . "Bronze"))
+      (rsr-compliance . "Bronze")
+      (registry-status . "submitted")
+      (container . "ghcr.io/hyperpolymath/polyglot-db-mcp"))
 
     (focus
-      (current-phase . "v1.1.0 In Progress")
+      (current-phase . "v1.1.0 Released - Directory Syndication")
       (deadline . #f)
       (blocking-projects . ()))
 
@@ -147,11 +149,15 @@
                  "CI/CD with language policy")))
 
       ((phase . "1.1.0 - Improvements")
-       (status . "in-progress")
-       (goals . ("Connection pooling" ;; DONE
-                 "Container images (Dockerfile, CI)"  ;; DONE
-                 "Better error messages" ;; DONE
-                 "Installation docs")))
+       (status . "complete")
+       (date . "2025-12-12")
+       (goals . ("Connection pooling"
+                 "Container images (Containerfile, ghcr.io)"
+                 "Better error messages with feedback links"
+                 "AI.scm for AI assistant instructions"
+                 "AsciiDoc documentation"
+                 "MCP Registry submission"
+                 "Community directory syndication")))
 
       ((phase . "2.0.0 - Full ReScript")
        (status . "vision")

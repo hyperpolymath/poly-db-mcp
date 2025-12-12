@@ -52,7 +52,7 @@ const adapters = {
 
 const server = new McpServer({
   name: "polyglot-db-mcp",
-  version: "1.0.0",
+  version: "1.1.0",
 });
 
 // =============================================================================
@@ -230,11 +230,20 @@ for (const [adapterName, adapter] of Object.entries(adapters)) {
           ],
         };
       } catch (error) {
+        const feedbackUrl = `https://github.com/hyperpolymath/polyglot-db-mcp/issues/new?title=${encodeURIComponent(`[BUG] ${toolName}: ${error.message.substring(0, 50)}`)}&labels=bug&body=${encodeURIComponent(`## Error Details\n- **Tool**: ${toolName}\n- **Adapter**: ${adapterName}\n- **Error**: ${error.message}\n\n## Environment\n- OS: \n- Deno version: \n\n## Steps to Reproduce\n1. \n\n## Additional Context\n`)}`;
         return {
           content: [
             {
               type: "text",
-              text: JSON.stringify({ error: error.message }, null, 2),
+              text: JSON.stringify({
+                error: error.message,
+                tool: toolName,
+                adapter: adapterName,
+                feedback: {
+                  message: "🐛 Found a bug? This is early development - your feedback helps!",
+                  reportUrl: feedbackUrl,
+                },
+              }, null, 2),
             },
           ],
         };

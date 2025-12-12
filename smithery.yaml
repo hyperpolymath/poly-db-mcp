@@ -1,0 +1,88 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+# Smithery configuration for polyglot-db-mcp
+
+name: polyglot-db-mcp
+description: Unified MCP server for 16 databases - PostgreSQL, MongoDB, Neo4j, Redis, and more
+version: 1.1.0
+author: hyperpolymath
+license: MIT
+repository: https://github.com/hyperpolymath/polyglot-db-mcp
+
+# Runtime configuration
+runtime: deno
+entry: index.js
+
+# Server capabilities
+capabilities:
+  tools: true
+  resources: false
+  prompts: false
+
+# Environment variables (all optional - connect to what you have)
+env:
+  # PostgreSQL
+  - name: POSTGRES_HOST
+    description: PostgreSQL host
+    required: false
+  - name: POSTGRES_PORT
+    description: PostgreSQL port
+    required: false
+  - name: POSTGRES_USER
+    description: PostgreSQL user
+    required: false
+  - name: POSTGRES_PASSWORD
+    description: PostgreSQL password
+    required: false
+    secret: true
+  - name: POSTGRES_DATABASE
+    description: PostgreSQL database
+    required: false
+
+  # MongoDB
+  - name: MONGODB_URL
+    description: MongoDB connection URL
+    required: false
+    secret: true
+
+  # Redis/Dragonfly
+  - name: REDIS_URL
+    description: Redis/Dragonfly URL
+    required: false
+
+  # Neo4j
+  - name: NEO4J_URL
+    description: Neo4j connection URL
+    required: false
+  - name: NEO4J_USER
+    description: Neo4j username
+    required: false
+  - name: NEO4J_PASSWORD
+    description: Neo4j password
+    required: false
+    secret: true
+
+# Tags for discovery
+tags:
+  - database
+  - postgresql
+  - mongodb
+  - neo4j
+  - redis
+  - elasticsearch
+  - multi-database
+  - sql
+  - nosql
+
+# Build configuration for Smithery hosting
+build:
+  dockerfile: Containerfile
+  context: .
+
+# Local installation
+install:
+  command: deno cache --config=deno.json index.js
+
+# Run command
+run:
+  command: deno run --allow-net --allow-read --allow-write --allow-env --unstable-kv index.js

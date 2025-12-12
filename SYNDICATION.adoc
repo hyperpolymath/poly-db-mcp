@@ -1,0 +1,174 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+= Directory Submission Materials
+:toc:
+:icons: font
+
+[IMPORTANT]
+====
+*EARLY DEVELOPMENT* — This project actively welcomes feedback, bug reports, and feature requests.
+====
+
+== Unified Submission Info
+
+=== Short Description (< 100 chars)
+----
+One MCP server for 16 databases. PostgreSQL, MongoDB, Neo4j, Redis, and more.
+----
+
+=== Medium Description (< 300 chars)
+----
+Unified MCP server providing access to 16 databases through a single interface: PostgreSQL, MongoDB, Neo4j, Redis/Dragonfly, SurrealDB, SQLite, DuckDB, MariaDB, Elasticsearch, InfluxDB, Qdrant, Meilisearch, XTDB, Memcached, LMDB, and iTop. Built with Deno for security and performance.
+----
+
+=== Full Description
+----
+polyglot-db-mcp is a unified Model Context Protocol (MCP) server that provides AI assistants with seamless access to 16 different databases through a single, consistent interface.
+
+**Supported Databases:**
+- **Relational**: PostgreSQL, MariaDB, SQLite
+- **Document**: MongoDB, SurrealDB
+- **Graph**: Neo4j
+- **Cache/KV**: Redis/Dragonfly, Memcached, LMDB
+- **Search**: Elasticsearch, Meilisearch
+- **Vector**: Qdrant
+- **Time Series**: InfluxDB
+- **Analytics**: DuckDB
+- **Specialized**: XTDB (bitemporal), iTop (CMDB)
+
+**Features:**
+- 50+ database tools exposed via MCP
+- Connection pooling for production workloads
+- Container support (podman, nerdctl, docker)
+- Early development - feedback shapes the project!
+
+**Installation:**
+```bash
+# Direct
+deno run --allow-net --allow-read --allow-write --allow-env --unstable-kv \
+  https://raw.githubusercontent.com/hyperpolymath/polyglot-db-mcp/main/index.js
+
+# Container
+podman run --rm -it ghcr.io/hyperpolymath/polyglot-db-mcp:main
+```
+----
+
+=== Tags/Categories
+----
+database, sql, nosql, mongodb, postgresql, neo4j, redis, elasticsearch, mcp, deno, multi-database, adapter, graphdb, vector-database, cache, search
+----
+
+=== Links
+[cols="1,3"]
+|===
+|Repository |https://github.com/hyperpolymath/polyglot-db-mcp
+|Container |ghcr.io/hyperpolymath/polyglot-db-mcp
+|Documentation |https://github.com/hyperpolymath/polyglot-db-mcp/blob/main/README.adoc
+|Issues |https://github.com/hyperpolymath/polyglot-db-mcp/issues
+|License |MIT
+|===
+
+== Directory-Specific Submissions
+
+=== 1. PulseMCP (pulsemcp.com)
+[cols="1,3"]
+|===
+|URL |https://pulsemcp.com/submit
+|Name |polyglot-db-mcp
+|Description |One MCP server for 16 databases. PostgreSQL, MongoDB, Neo4j, Redis, and more.
+|Repository |https://github.com/hyperpolymath/polyglot-db-mcp
+|Categories |Database, Infrastructure
+|Status |Early Development - feedback welcome!
+|===
+
+=== 2. Smithery (smithery.ai)
+[cols="1,3"]
+|===
+|URL |https://smithery.ai/submit
+|Name |polyglot-db-mcp
+|Description |Unified MCP server for 16 databases
+|GitHub |hyperpolymath/polyglot-db-mcp
+|Installation |`deno run --allow-net --allow-read --allow-write --allow-env --unstable-kv index.js`
+|===
+
+=== 3. MCP.so
+[cols="1,3"]
+|===
+|URL |https://mcp.so/submit
+|Name |polyglot-db-mcp
+|Author |hyperpolymath
+|Description |Access 16 databases through one MCP server
+|Tags |database, postgresql, mongodb, neo4j, redis
+|===
+
+=== 4. Cursor Directory (cursor.directory)
+[cols="1,3"]
+|===
+|URL |https://cursor.directory/mcp
+|Name |polyglot-db-mcp
+|Description |Multi-database MCP server (16 databases)
+|Install Command |Clone repo, run `deno task start`
+|===
+
+=== 5. MCPServers.org
+[cols="1,3"]
+|===
+|URL |https://mcpservers.org/submit
+|Name |polyglot-db-mcp
+|Description |One MCP server for 16 databases
+|GitHub URL |https://github.com/hyperpolymath/polyglot-db-mcp
+|===
+
+== Submission Status Tracking
+
+[cols="1,1,1,2"]
+|===
+|Directory |Submitted |Status |Notes
+
+|MCP Registry (official)
+|2025-12-12
+|Pending
+|Requires npm package (Docker not yet supported)
+
+|PulseMCP
+|2025-12-12
+|Pending
+|Web form at pulsemcp.com/servers or email mike@pulsemcp.com
+
+|Smithery
+|2025-12-12
+|Ready
+|smithery.yaml created - run `smithery login && smithery publish`
+
+|MCP.so
+|2025-12-12
+|Submitted
+|https://github.com/chatmcp/mcpso/issues/373
+
+|Cursor Directory
+|2025-12-12
+|Submitted
+|https://github.com/pontusab/directories/issues/292
+
+|MCPServers.org (awesome-mcp-servers)
+|2025-12-12
+|Submitted
+|https://github.com/punkpeye/awesome-mcp-servers/issues/1537
+|===
+
+== Early Development Notice
+
+Include in all submissions:
+
+[IMPORTANT]
+====
+This project is in active v1.x development. We enthusiastically welcome:
+
+* Bug reports and issues
+* Feature requests and ideas
+* Database adapter suggestions
+* Integration feedback
+* Documentation improvements
+
+Your feedback directly shapes this project! File issues at: https://github.com/hyperpolymath/polyglot-db-mcp/issues
+====
