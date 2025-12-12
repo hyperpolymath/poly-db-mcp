@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
 /**
  * iTop Adapter
  * IT Operations Portal - CMDB and ITSM

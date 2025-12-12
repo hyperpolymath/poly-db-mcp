@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
 /**
  * LMDB Adapter - using Deno.Kv as backend
  * Deno.Kv provides similar KV semantics with native Deno support

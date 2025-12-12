@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# JavaScript/Deno
+*.js text eol=lf
+*.mjs text eol=lf
+*.json text eol=lf
+
+# Documentation
+*.md text eol=lf
+*.adoc text eol=lf
+*.txt text eol=lf
+
+# Configuration
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# Shell scripts
+*.sh text eol=lf
+
+# Justfile
+justfile text eol=lf
+
+# Binary files
+*.db binary
+*.sqlite binary
+
+# Linguist overrides
+*.adoc linguist-documentation
+*.md linguist-documentation

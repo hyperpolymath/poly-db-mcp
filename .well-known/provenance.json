@@ -1,0 +1,19 @@
+{
+  "@context": "https://w3id.org/security/v2",
+  "type": "ProvenanceStatement",
+  "created": "2025-12-12T00:00:00Z",
+  "creator": {
+    "type": "Person",
+    "name": "Jonathan D.A. Jewell",
+    "url": "https://github.com/hyperpolymath"
+  },
+  "target": {
+    "type": "SoftwareSourceCode",
+    "name": "polyglot-db-mcp",
+    "codeRepository": "https://github.com/hyperpolymath/polyglot-db-mcp",
+    "programmingLanguage": "JavaScript",
+    "runtimePlatform": "Deno"
+  },
+  "license": "MIT",
+  "rsrCompliance": "Bronze"
+}

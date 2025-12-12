@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+
 /**
  * DuckDB Adapter (Stub)
  * Note: DuckDB native module requires compiled binaries.

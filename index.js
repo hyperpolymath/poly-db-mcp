@@ -1,4 +1,6 @@
 #!/usr/bin/env -S deno run --allow-net --allow-read --allow-write --allow-env
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 
 /**
  * Polyglot DB MCP Server

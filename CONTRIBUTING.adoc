@@ -1,0 +1,109 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+= Contributing Guide
+:toc:
+
+== Welcome
+
+Thank you for your interest in contributing to polyglot-db-mcp!
+
+== Getting Started
+
+=== Prerequisites
+
+* Deno 1.45+
+* Git
+* Access to at least one supported database for testing
+
+=== Setup
+
+[source,bash]
+----
+git clone https://github.com/hyperpolymath/polyglot-db-mcp.git
+cd polyglot-db-mcp
+deno task start
+----
+
+== Tri-Perimeter Contribution Framework (TPCF)
+
+=== Perimeter 1 (Core)
+
+Maintainers only:
+
+* Core MCP server implementation
+* Security-critical code
+* Release management
+
+=== Perimeter 2 (Expert)
+
+Trusted contributors:
+
+* New database adapters
+* Performance optimizations
+* API design changes
+
+=== Perimeter 3 (Community)
+
+Open to all:
+
+* Documentation improvements
+* Bug reports
+* Feature suggestions
+* Test coverage
+
+== How to Contribute
+
+=== Reporting Bugs
+
+1. Check existing issues first
+2. Create a new issue with:
+   - Clear title
+   - Steps to reproduce
+   - Expected vs actual behavior
+   - Environment details
+
+=== Suggesting Features
+
+1. Open an issue with `[Feature]` prefix
+2. Describe the use case
+3. Propose implementation approach
+
+=== Submitting Code
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add SPDX headers to new files
+5. Test your changes
+6. Submit a pull request
+
+== Code Standards
+
+=== File Headers
+
+All source files must include SPDX headers:
+
+[source,javascript]
+----
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2025 Your Name
+----
+
+=== Style
+
+* Use Deno's built-in formatter
+* Prefer async/await over callbacks
+* Document public functions
+* Handle errors gracefully
+
+== Adding a New Database Adapter
+
+1. Create `adapters/yourdb.js`
+2. Export: `name`, `description`, `connect()`, `disconnect()`, `isConnected()`, `tools`
+3. Follow existing adapter patterns
+4. Add environment variable documentation to README
+5. Test all tools manually
+
+== Questions?
+
+Open an issue or contact the maintainers.

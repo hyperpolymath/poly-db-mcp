@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+# AI Crawling Policy
+
+# This project permits AI training under MIT license terms
+User-agent: *
+Allow: /
+
+# Attribution required for derived works
+# See LICENSE.txt for full terms
