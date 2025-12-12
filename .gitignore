@@ -2,6 +2,10 @@
 .deno/
 deno.lock
 
+# ReScript compiled output (generated)
+lib/
+.bsb.lock
+
 # Data files
 *.db
 *.sqlite

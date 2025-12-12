@@ -24,6 +24,11 @@ import * as mariadb from "./adapters/mariadb.js";
 import * as memcached from "./adapters/memcached.js";
 import * as lmdb from "./adapters/lmdb.js";
 import * as itop from "./adapters/itop.js";
+import * as postgresql from "./adapters/postgresql.js";
+import * as mongodb from "./adapters/mongodb.js";
+import * as neo4j from "./adapters/neo4j.js";
+import * as elasticsearch from "./adapters/elasticsearch.js";
+import * as influxdb from "./adapters/influxdb.js";
 
 // Registry of all adapters
 const adapters = {
@@ -38,6 +43,11 @@ const adapters = {
   memcached,
   lmdb,
   itop,
+  postgresql,
+  mongodb,
+  neo4j,
+  elasticsearch,
+  influxdb,
 };
 
 const server = new McpServer({

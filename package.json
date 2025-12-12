@@ -1,14 +1,22 @@
 {
   "name": "polyglot-db-mcp",
   "version": "1.0.0",
-  "description": "",
+  "description": "Unified MCP server for multiple databases - 16 databases via MCP protocol",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "res:build": "rescript build",
+    "res:clean": "rescript clean",
+    "res:watch": "rescript build -w",
+    "build": "npm run res:build",
+    "test": "deno test"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["mcp", "database", "polyglot", "deno", "rescript"],
+  "author": "Jonathan D.A. Jewell",
+  "license": "MIT",
+  "devDependencies": {
+    "rescript": "^11.1.4"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.24.3",
     "@qdrant/js-client-rest": "^1.16.2",
@@ -19,6 +27,10 @@
     "mariadb": "^3.4.5",
     "meilisearch": "^0.54.0",
     "memjs": "^1.3.2",
-    "surrealdb": "^1.3.2"
+    "surrealdb": "^1.3.2",
+    "postgres": "^3.4.4",
+    "mongodb": "^6.12.0",
+    "neo4j-driver": "^5.27.0",
+    "sql.js": "^1.11.0"
   }
 }
