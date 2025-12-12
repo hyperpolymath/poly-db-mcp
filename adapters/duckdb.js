@@ -1,32 +1,54 @@
 /**
- * DuckDB Adapter
- * Analytical SQL database - query CSV, Parquet, JSON files directly
+ * DuckDB Adapter (Stub)
+ * Note: DuckDB native module requires compiled binaries.
+ * Use duckdb CLI or HTTP API for Deno compatibility.
+ *
+ * Alternative: Run `duckdb -httpd` for HTTP interface
  */
 
-import * as duckdb from "npm:duckdb-async@1";
-
-let db = null;
-
 const config = {
-  path: Deno.env.get("DUCKDB_PATH") || ":memory:",
+  httpUrl: Deno.env.get("DUCKDB_HTTP_URL") || null,
 };
 
+let available = false;
+
+async function httpQuery(sql) {
+  if (!config.httpUrl) {
+    throw new Error(
+      "DuckDB not available. Set DUCKDB_HTTP_URL or use duckdb CLI directly."
+    );
+  }
+  const response = await fetch(`${config.httpUrl}/query`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query: sql }),
+  });
+  if (!response.ok) {
+    throw new Error(`DuckDB HTTP error: ${response.status}`);
+  }
+  return await response.json();
+}
+
 export async function connect() {
-  if (db) return db;
-  db = await duckdb.Database.create(config.path);
-  return db;
+  if (config.httpUrl) {
+    try {
+      await httpQuery("SELECT 1");
+      available = true;
+    } catch {
+      available = false;
+    }
+  }
+  return available;
 }
 
 export async function disconnect() {
-  if (db) {
-    await db.close();
-    db = null;
-  }
+  return true;
 }
 
 export async function isConnected() {
+  if (!config.httpUrl) return false;
   try {
-    await connect();
+    await httpQuery("SELECT 1");
     return true;
   } catch {
     return false;
@@ -34,7 +56,8 @@ export async function isConnected() {
 }
 
 export const name = "duckdb";
-export const description = "Analytical database - query CSV, Parquet, JSON files directly";
+export const description =
+  "Analytical database (requires DUCKDB_HTTP_URL or duckdb CLI)";
 
 export const tools = {
   duck_query: {
@@ -43,21 +66,14 @@ export const tools = {
       sql: { type: "string", description: "SQL query" },
     },
     handler: async ({ sql }) => {
-      const conn = await connect();
-      const rows = await conn.all(sql);
-      return { count: rows.length, rows: rows.slice(0, 1000) };
-    },
-  },
-
-  duck_exec: {
-    description: "Execute a SQL statement (CREATE, INSERT, etc.)",
-    params: {
-      sql: { type: "string", description: "SQL statement" },
-    },
-    handler: async ({ sql }) => {
-      const conn = await connect();
-      await conn.exec(sql);
-      return { success: true };
+      if (!config.httpUrl) {
+        return {
+          error: "DuckDB not configured",
+          hint: "Set DUCKDB_HTTP_URL to use DuckDB HTTP API, or run: duckdb -httpd localhost:4321",
+        };
+      }
+      const result = await httpQuery(sql);
+      return { rows: result };
     },
   },
 
@@ -65,76 +81,37 @@ export const tools = {
     description: "Query a CSV file directly",
     params: {
       path: { type: "string", description: "Path to CSV file" },
-      query: { type: "string", description: "SQL query using 'csv' as table name (optional)" },
       limit: { type: "number", description: "Limit rows (default 100)" },
     },
-    handler: async ({ path, query, limit = 100 }) => {
-      const conn = await connect();
-      const sql = query
-        ? query.replace(/\bcsv\b/gi, `read_csv_auto('${path}')`)
-        : `SELECT * FROM read_csv_auto('${path}') LIMIT ${limit}`;
-      const rows = await conn.all(sql);
-      return { count: rows.length, rows };
+    handler: async ({ path, limit = 100 }) => {
+      if (!config.httpUrl) {
+        return {
+          error: "DuckDB not configured",
+          hint: "Use duckdb CLI: duckdb -c \"SELECT * FROM '${path}' LIMIT ${limit}\"",
+        };
+      }
+      const sql = `SELECT * FROM read_csv_auto('${path}') LIMIT ${limit}`;
+      const result = await httpQuery(sql);
+      return { rows: result };
     },
   },
 
   duck_read_parquet: {
     description: "Query a Parquet file directly",
     params: {
-      path: { type: "string", description: "Path to Parquet file (can be local or S3)" },
-      query: { type: "string", description: "SQL query using 'parquet' as table name (optional)" },
+      path: { type: "string", description: "Path to Parquet file" },
       limit: { type: "number", description: "Limit rows (default 100)" },
     },
-    handler: async ({ path, query, limit = 100 }) => {
-      const conn = await connect();
-      const sql = query
-        ? query.replace(/\bparquet\b/gi, `read_parquet('${path}')`)
-        : `SELECT * FROM read_parquet('${path}') LIMIT ${limit}`;
-      const rows = await conn.all(sql);
-      return { count: rows.length, rows };
-    },
-  },
-
-  duck_read_json: {
-    description: "Query a JSON file directly",
-    params: {
-      path: { type: "string", description: "Path to JSON file" },
-      query: { type: "string", description: "SQL query using 'json' as table name (optional)" },
-      limit: { type: "number", description: "Limit rows (default 100)" },
-    },
-    handler: async ({ path, query, limit = 100 }) => {
-      const conn = await connect();
-      const sql = query
-        ? query.replace(/\bjson\b/gi, `read_json_auto('${path}')`)
-        : `SELECT * FROM read_json_auto('${path}') LIMIT ${limit}`;
-      const rows = await conn.all(sql);
-      return { count: rows.length, rows };
-    },
-  },
-
-  duck_export_parquet: {
-    description: "Export query results to Parquet file",
-    params: {
-      sql: { type: "string", description: "SQL query to export" },
-      path: { type: "string", description: "Output Parquet file path" },
-    },
-    handler: async ({ sql, path }) => {
-      const conn = await connect();
-      await conn.exec(`COPY (${sql}) TO '${path}' (FORMAT PARQUET)`);
-      return { exported_to: path };
-    },
-  },
-
-  duck_export_csv: {
-    description: "Export query results to CSV file",
-    params: {
-      sql: { type: "string", description: "SQL query to export" },
-      path: { type: "string", description: "Output CSV file path" },
-    },
-    handler: async ({ sql, path }) => {
-      const conn = await connect();
-      await conn.exec(`COPY (${sql}) TO '${path}' (FORMAT CSV, HEADER)`);
-      return { exported_to: path };
+    handler: async ({ path, limit = 100 }) => {
+      if (!config.httpUrl) {
+        return {
+          error: "DuckDB not configured",
+          hint: "Use duckdb CLI: duckdb -c \"SELECT * FROM '${path}' LIMIT ${limit}\"",
+        };
+      }
+      const sql = `SELECT * FROM read_parquet('${path}') LIMIT ${limit}`;
+      const result = await httpQuery(sql);
+      return { rows: result };
     },
   },
 
@@ -142,53 +119,14 @@ export const tools = {
     description: "List all tables",
     params: {},
     handler: async () => {
-      const conn = await connect();
-      const tables = await conn.all("SHOW TABLES");
-      return { tables };
-    },
-  },
-
-  duck_describe: {
-    description: "Describe a table or query result structure",
-    params: {
-      target: { type: "string", description: "Table name or SQL query" },
-    },
-    handler: async ({ target }) => {
-      const conn = await connect();
-      const sql = target.toUpperCase().includes("SELECT")
-        ? `DESCRIBE (${target})`
-        : `DESCRIBE ${target}`;
-      const columns = await conn.all(sql);
-      return { columns };
-    },
-  },
-
-  duck_summarize: {
-    description: "Get statistical summary of a table or query",
-    params: {
-      target: { type: "string", description: "Table name or SQL query" },
-    },
-    handler: async ({ target }) => {
-      const conn = await connect();
-      const sql = target.toUpperCase().includes("SELECT")
-        ? `SUMMARIZE (${target})`
-        : `SUMMARIZE ${target}`;
-      const summary = await conn.all(sql);
-      return { summary };
-    },
-  },
-
-  duck_import_csv: {
-    description: "Import CSV file into a table",
-    params: {
-      path: { type: "string", description: "Path to CSV file" },
-      table: { type: "string", description: "Target table name" },
-    },
-    handler: async ({ path, table }) => {
-      const conn = await connect();
-      await conn.exec(`CREATE TABLE ${table} AS SELECT * FROM read_csv_auto('${path}')`);
-      const count = await conn.all(`SELECT COUNT(*) as count FROM ${table}`);
-      return { table, rows_imported: count[0].count };
+      if (!config.httpUrl) {
+        return {
+          error: "DuckDB not configured",
+          hint: "Set DUCKDB_HTTP_URL or use duckdb CLI",
+        };
+      }
+      const result = await httpQuery("SHOW TABLES");
+      return { tables: result };
     },
   },
 };

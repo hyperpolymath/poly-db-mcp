@@ -1,30 +1,24 @@
 /**
- * LMDB Adapter
- * Lightning Memory-Mapped Database - fast embedded key-value store
+ * LMDB Adapter - using Deno.Kv as backend
+ * Deno.Kv provides similar KV semantics with native Deno support
  */
 
-import { open } from "npm:lmdb@3";
-
-let db = null;
+let kv = null;
 
 const config = {
-  path: Deno.env.get("LMDB_PATH") || "./lmdb-data",
-  compression: Deno.env.get("LMDB_COMPRESSION") === "true",
+  path: Deno.env.get("LMDB_PATH") || null, // null = in-memory
 };
 
 export async function connect() {
-  if (db) return db;
-  db = open({
-    path: config.path,
-    compression: config.compression,
-  });
-  return db;
+  if (kv) return kv;
+  kv = await Deno.openKv(config.path || undefined);
+  return kv;
 }
 
 export async function disconnect() {
-  if (db) {
-    await db.close();
-    db = null;
+  if (kv) {
+    kv.close();
+    kv = null;
   }
 }
 
@@ -38,7 +32,7 @@ export async function isConnected() {
 }
 
 export const name = "lmdb";
-export const description = "Lightning Memory-Mapped Database - fast embedded key-value store";
+export const description = "Embedded KV store (Deno.Kv backend)";
 
 export const tools = {
   lmdb_get: {
@@ -48,8 +42,8 @@ export const tools = {
     },
     handler: async ({ key }) => {
       const conn = await connect();
-      const value = conn.get(key);
-      return { key, value, found: value !== undefined };
+      const result = await conn.get([key]);
+      return { key, value: result.value, found: result.value !== null };
     },
   },
 
@@ -61,14 +55,13 @@ export const tools = {
     },
     handler: async ({ key, value }) => {
       const conn = await connect();
-      // Try to parse as JSON, otherwise store as string
       let val;
       try {
         val = JSON.parse(value);
       } catch {
         val = value;
       }
-      await conn.put(key, val);
+      await conn.set([key], val);
       return { success: true, key };
     },
   },
@@ -80,9 +73,9 @@ export const tools = {
     },
     handler: async ({ key }) => {
       const conn = await connect();
-      const existed = conn.get(key) !== undefined;
-      await conn.remove(key);
-      return { deleted: existed, key };
+      const existing = await conn.get([key]);
+      await conn.delete([key]);
+      return { deleted: existing.value !== null, key };
     },
   },
 
@@ -93,30 +86,30 @@ export const tools = {
     },
     handler: async ({ key }) => {
       const conn = await connect();
-      const exists = conn.doesExist(key);
-      return { key, exists };
+      const result = await conn.get([key]);
+      return { key, exists: result.value !== null };
     },
   },
 
   lmdb_range: {
     description: "Get a range of key-value pairs",
     params: {
-      start: { type: "string", description: "Start key (optional)" },
-      end: { type: "string", description: "End key (optional)" },
+      prefix: { type: "string", description: "Key prefix (optional)" },
       limit: { type: "number", description: "Max results (default 100)" },
-      reverse: { type: "boolean", description: "Reverse order (default false)" },
     },
-    handler: async ({ start, end, limit = 100, reverse = false }) => {
+    handler: async ({ prefix = "", limit = 100 }) => {
       const conn = await connect();
-      const options = { limit, reverse };
-      if (start) options.start = start;
-      if (end) options.end = end;
-
       const entries = [];
-      for (const { key, value } of conn.getRange(options)) {
-        entries.push({ key, value });
+      const iter = conn.list({ prefix: prefix ? [prefix] : [] });
+
+      for await (const entry of iter) {
+        entries.push({
+          key: entry.key.join("/"),
+          value: entry.value,
+        });
         if (entries.length >= limit) break;
       }
+
       return { count: entries.length, entries };
     },
   },
@@ -127,84 +120,49 @@ export const tools = {
       prefix: { type: "string", description: "Key prefix to match" },
       limit: { type: "number", description: "Max results (default 100)" },
     },
-    handler: async ({ prefix, limit = 100 }) => {
+    handler: async ({ prefix = "", limit = 100 }) => {
       const conn = await connect();
       const keys = [];
-      for (const { key } of conn.getRange({ start: prefix })) {
-        if (!key.startsWith(prefix)) break;
-        keys.push(key);
+      const iter = conn.list({ prefix: prefix ? [prefix] : [] });
+
+      for await (const entry of iter) {
+        keys.push(entry.key.join("/"));
         if (keys.length >= limit) break;
       }
-      return { count: keys.length, keys };
-    },
-  },
 
-  lmdb_count: {
-    description: "Count entries in the database",
-    params: {
-      prefix: { type: "string", description: "Key prefix to count (optional)" },
-    },
-    handler: async ({ prefix }) => {
-      const conn = await connect();
-      if (prefix) {
-        let count = 0;
-        for (const { key } of conn.getRange({ start: prefix })) {
-          if (!key.startsWith(prefix)) break;
-          count++;
-        }
-        return { count, prefix };
-      }
-      return { count: conn.getCount() };
+      return { count: keys.length, keys };
     },
   },
 
   lmdb_batch: {
     description: "Execute multiple put/delete operations atomically",
     params: {
-      operations: { type: "string", description: "JSON array of {op: 'put'|'delete', key, value?}" },
+      operations: {
+        type: "string",
+        description: "JSON array of {op: 'put'|'delete', key, value?}",
+      },
     },
     handler: async ({ operations }) => {
       const conn = await connect();
       const ops = JSON.parse(operations);
+      let atomic = conn.atomic();
 
-      await conn.transaction(() => {
-        for (const op of ops) {
-          if (op.op === "put") {
-            let val;
-            try {
-              val = typeof op.value === "string" ? JSON.parse(op.value) : op.value;
-            } catch {
-              val = op.value;
-            }
-            conn.put(op.key, val);
-          } else if (op.op === "delete") {
-            conn.remove(op.key);
+      for (const op of ops) {
+        if (op.op === "put") {
+          let val;
+          try {
+            val = typeof op.value === "string" ? JSON.parse(op.value) : op.value;
+          } catch {
+            val = op.value;
           }
+          atomic = atomic.set([op.key], val);
+        } else if (op.op === "delete") {
+          atomic = atomic.delete([op.key]);
         }
-      });
+      }
 
-      return { success: true, operations: ops.length };
-    },
-  },
-
-  lmdb_clear: {
-    description: "Clear all entries with a given prefix",
-    params: {
-      prefix: { type: "string", description: "Key prefix to clear" },
-    },
-    handler: async ({ prefix }) => {
-      const conn = await connect();
-      let cleared = 0;
-
-      await conn.transaction(() => {
-        for (const { key } of conn.getRange({ start: prefix })) {
-          if (!key.startsWith(prefix)) break;
-          conn.remove(key);
-          cleared++;
-        }
-      });
-
-      return { cleared, prefix };
+      const result = await atomic.commit();
+      return { success: result.ok, operations: ops.length };
     },
   },
 
@@ -213,9 +171,14 @@ export const tools = {
     params: {},
     handler: async () => {
       const conn = await connect();
+      let count = 0;
+      for await (const _ of conn.list({ prefix: [] })) {
+        count++;
+      }
       return {
-        path: config.path,
-        count: conn.getCount(),
+        backend: "Deno.Kv",
+        path: config.path || ":memory:",
+        count,
       };
     },
   },
