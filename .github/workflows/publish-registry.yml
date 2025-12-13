@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 
 name: Publish to MCP Registry
@@ -12,16 +12,17 @@ on:
         description: 'Version to publish (e.g., 1.1.0)'
         required: true
 
-permissions:
-  id-token: write
-  contents: read
+permissions: read-all
 
 jobs:
   publish:
     name: Publish to MCP Registry
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Download mcp-publisher
         run: |
