@@ -98,7 +98,7 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup Deno
-        uses: denoland/setup-deno@5e01c5a7c0e4090c06c55f5f6a675709f03d4e90 # v1
+        uses: denoland/setup-deno@11b63cf76cfcafb4e43f97b6cad24d8e8438f62d # v1
         with:
           deno-version: v1.x
 
@@ -127,7 +127,7 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup Deno
-        uses: denoland/setup-deno@5e01c5a7c0e4090c06c55f5f6a675709f03d4e90 # v1
+        uses: denoland/setup-deno@11b63cf76cfcafb4e43f97b6cad24d8e8438f62d # v1
         with:
           deno-version: v1.x
 

@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Install Deno
-        uses: denoland/setup-deno@5fae568d37c3b73449009674875529a984555dd1 # v2.0.0
+        uses: denoland/setup-deno@e95548e56dfa95d4e1a28d6f422fafe75c4c26fb # v2
         with:
           deno-version: v2.x
 
@@ -28,7 +28,7 @@ jobs:
           deno check server.js
 
       - name: Deploy to Deno Deploy
-        uses: denoland/deployctl@14cb62efc38f20b0f951a7d72c65de41c0abcb0f # v1.12.0
+        uses: denoland/deployctl@7bded90d0d09cd99bbfb513966146315db97618b # v1.13.1
         with:
           project: polyglot-db-mcp
           entrypoint: server.js
