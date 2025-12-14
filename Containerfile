@@ -19,7 +19,7 @@ WORKDIR /app
 # Copy source files
 COPY index.js deno.json ./
 COPY adapters/ ./adapters/
-COPY lib/ ./lib/
+# src/ contains ReScript source (optional)
 COPY src/ ./src/
 
 # Cache dependencies using deno.json config
