@@ -1,17 +1,17 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
-  "name": "io.github.hyperpolymath/polyglot-db-mcp",
-  "description": "One MCP server for 16 databases. PostgreSQL, MongoDB, Neo4j, Redis, and more.",
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.hyperpolymath/poly-db-mcp",
+  "title": "Polyglot Database MCP",
+  "description": "Unified MCP server providing access to 20 databases through a single interface. Supports SurrealDB, ArangoDB, Virtuoso SPARQL, CouchDB, Cassandra, Redis/Dragonfly, XTDB, SQLite, Qdrant, Meilisearch, MariaDB, and more.",
   "repository": {
-    "url": "https://github.com/hyperpolymath/polyglot-db-mcp",
+    "url": "https://github.com/hyperpolymath/poly-db-mcp",
     "source": "github"
   },
-  "version": "1.1.0",
+  "version": "1.0.0",
   "packages": [
     {
-      "registryType": "docker",
-      "identifier": "ghcr.io/hyperpolymath/polyglot-db-mcp",
-      "version": "1.1.0",
+      "registryType": "oci",
+      "identifier": "ghcr.io/hyperpolymath/poly-db-mcp:main",
       "transport": {
         "type": "stdio"
       }
