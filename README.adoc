@@ -45,7 +45,7 @@ cd polyglot-db-mcp
 # Add to Claude Code
 claude mcp add polyglot-db -- deno run \
   --allow-net --allow-read --allow-write --allow-env \
-  $(pwd)/index.js
+  $(pwd)/server.js
 ----
 
 === Option B: Container (Recommended for production)
@@ -69,12 +69,40 @@ docker run -d --name polyglot-db \
   ghcr.io/hyperpolymath/polyglot-db-mcp:latest
 ----
 
-=== Option C: Deno Deploy (Serverless)
+=== Option C: Deno Deploy (Serverless / HTTP Mode)
+
+Polyglot DB MCP supports the MCP Streamable HTTP transport (June 2025 spec) for cloud deployment:
 
 [source,bash]
 ----
-deployctl deploy --project=polyglot-db index.js
+# Deploy to Deno Deploy
+deployctl deploy --project=polyglot-db-mcp server.js
+
+# Or run HTTP mode locally
+deno task serve
 ----
+
+Once deployed, configure your MCP client to connect via HTTP:
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "polyglot-db": {
+      "transport": {
+        "type": "http",
+        "url": "https://polyglot-db-mcp.deno.dev/mcp"
+      }
+    }
+  }
+}
+----
+
+HTTP endpoints:
+
+* `GET /health` - Health check
+* `GET /info` - Server information
+* `POST /mcp` - MCP Streamable HTTP endpoint (JSON-RPC 2.0)
 
 == Quick Start
 
