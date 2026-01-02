@@ -126,6 +126,105 @@ export ELASTICSEARCH_URL=http://localhost:9200
 "Cache this result in Redis with a 1 hour TTL"
 ----
 
+== Runtime Modes
+
+This MCP server supports **both** deployment modes:
+
+|===
+|Mode |Supported |Permissions |Notes
+
+|Local-Agent (stdio)
+|✓ Yes
+|`--allow-net --allow-read --allow-write --allow-env`
+|Primary mode. Direct database connections.
+
+|Hosted-HTTP
+|✓ Yes
+|N/A (HTTP transport)
+|Deploy to Deno Deploy or any HTTP host.
+|===
+
+=== Local-Agent Mode
+
+[source,bash]
+----
+deno run --allow-net --allow-read --allow-write --allow-env server.js
+----
+
+=== Hosted-HTTP Mode
+
+[source,bash]
+----
+# Deploy to Deno Deploy
+deployctl deploy --project=polyglot-db-mcp server.js
+
+# Or run locally with HTTP
+deno task serve
+----
+
+== Security Boundary
+
+[NOTE]
+====
+Unlike CLI-wrapping MCPs, Polyglot DB MCP uses **direct database drivers** via npm packages. There is no shell execution (`--allow-run` is not required).
+====
+
+**What this means:**
+
+* Database credentials are passed via environment variables
+* Connections are made directly from the MCP server to databases
+* No external CLI tools are executed
+* The security boundary is **your database authentication**
+
+**Recommendations:**
+
+1. Use database users with minimal necessary permissions
+2. Consider read-only users for exploration/query tools
+3. Avoid superuser/admin credentials
+4. Use connection encryption (SSL/TLS) where available
+5. Set network ACLs on database servers
+6. Review tool calls before approving in your MCP client
+
+== Smoke Test
+
+Verify the server is working correctly:
+
+[source,bash]
+----
+# 1. Set at least one database connection
+export POSTGRES_HOST=localhost POSTGRES_DATABASE=postgres
+
+# 2. Start the server
+deno run --allow-net --allow-read --allow-write --allow-env server.js &
+SERVER_PID=$!
+
+# 3. The MCP client should be able to call:
+#    - db_list (lists all supported databases)
+#    - db_status (shows connected databases)
+#    - pg_query "SELECT 1" (if PostgreSQL configured)
+
+# 4. Cleanup
+kill $SERVER_PID
+----
+
+**Expected smoke test results:**
+
+|===
+|Check |Expected Result
+
+|Server starts
+|No errors, listens on stdio (or HTTP port)
+
+|db_list works
+|Returns list of 20 supported databases
+
+|db_status works
+|Shows which databases have valid connections
+
+|pg_query (if PostgreSQL)
+|Returns query results
+|===
+
 == Supported Databases
 
 === Relational
