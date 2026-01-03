@@ -697,8 +697,17 @@ Then import in `index.js` and rebuild.
 |*1.0.0* |Released |16 databases, ReScript core, CI/CD
 |*1.1.0* |In Progress |Connection pooling, container images, better errors
 |1.2.0 |Planned |Cross-database pipelines, caching helpers
-|2.0.0 |Vision |100% ReScript, RSR Gold compliance
+|2.0.0 |Vision |100% ReScript, RSR Gold compliance, FormDB integration
 |===
+
+=== FormDB Integration (v2.0.0)
+
+https://github.com/hyperpolymath/formdb[FormDB] is a narrative-first, reversible, audit-grade database. When its API stabilizes, poly-db-mcp will add:
+
+* `formdb_query` — Execute FQL queries with provenance
+* `formdb_explain` — Get plan + reasons for queries
+* `formdb_introspect` — Schema and constraint inspection
+* `formdb_journal` — Access audit trail and reversibility primitives
 
 == Related Projects
 
