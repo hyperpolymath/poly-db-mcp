@@ -327,7 +327,7 @@ kill $SERVER_PID
 |Database |License |Best For |Tools
 
 |*XTDB* |MIT (FOSS) |Bitemporal queries, audit trails |`xtdb_*`
-|*iTop* |AGPL v3 (FOSS) |IT asset management, CMDB |`itop_*`
+|*iTop* |PMPL 1.0 (FOSS) |IT asset management, CMDB |`itop_*`
 |*VeriSimDB* |PMPL-1.0 (FOSS) |Multimodal federation (6 modalities: Graph, Vector, Tensor, Semantic, Document, Temporal), drift detection, ZKP verification |`verisimdb_*`
 |===
 
@@ -737,7 +737,7 @@ https://github.com/hyperpolymath/formbd[FormBD] is a narrative-first, reversible
 
 == License
 
-*Dual-licensed:* link:LICENSE.txt[MIT] OR link:LICENSE.txt[AGPL-3.0-or-later] — your choice.
+*Dual-licensed:* link:LICENSE.txt[MIT] OR link:LICENSE.txt[PMPL-1.0-or-later] — your choice.
 
 We encourage (but don't require) layering the https://github.com/hyperpolymath/palimpsest-license[Palimpsest License] for ethical AI development practices.
 
