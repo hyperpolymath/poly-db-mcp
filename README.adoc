@@ -22,9 +22,9 @@ toc::[]
 
 == Why Polyglot DB?
 
-Modern applications use multiple databases — SQL for transactions, Redis for caching, Elasticsearch for search, vectors for AI. Switching between CLIs, APIs, and query languages is exhausting.
+Modern applications use multiple databases — SQL for transactions, Redis for caching, Elasticsearch for search, vectors for AI, multimodal for knowledge federation. Switching between CLIs, APIs, and query languages is exhausting.
 
-*Polyglot DB MCP* gives Claude (and other MCP clients) direct access to all your databases through natural language:
+*Polyglot DB MCP* gives Claude (and other MCP clients) direct access to all 21 databases through natural language:
 
 [quote]
 Find all users in PostgreSQL who signed up last week, then check if they're in the Redis cache
@@ -328,6 +328,7 @@ kill $SERVER_PID
 
 |*XTDB* |MIT (FOSS) |Bitemporal queries, audit trails |`xtdb_*`
 |*iTop* |AGPL v3 (FOSS) |IT asset management, CMDB |`itop_*`
+|*VeriSimDB* |PMPL-1.0 (FOSS) |Multimodal federation (6 modalities: Graph, Vector, Tensor, Semantic, Document, Temporal), drift detection, ZKP verification |`verisimdb_*`
 |===
 
 NOTE: *FOSS* = Free & Open Source | *Source-Available* = viewable but restricted
@@ -534,12 +535,20 @@ ITOP_USERNAME=admin
 ITOP_PASSWORD=secret
 ----
 
+=== VeriSimDB
+
+[source,bash]
+----
+VERISIMDB_URL=http://localhost:8080
+VERISIMDB_API_KEY=your-api-key     # optional
+----
+
 == Usage Examples
 
 === Meta Tools
 
 ----
-db_list              List all 18 supported databases
+db_list              List all 21 supported databases
 db_status            Check which databases are currently connected
 db_help [database]   Get available tools for a specific database
 ----
@@ -595,6 +604,17 @@ Search for vectors similar to this embedding in the documents collection
 
 [quote]
 Create a new collection with 1536 dimensions for OpenAI embeddings
+
+*VeriSimDB:*
+
+[quote]
+Create a hexad with graph relationships and vector embeddings
+
+[quote]
+Search across all 6 modalities for machine learning papers
+
+[quote]
+Verify a zero-knowledge proof for citation compliance without accessing the data
 
 *Cross-Database:*
 

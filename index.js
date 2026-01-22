@@ -33,6 +33,7 @@ import * as arangodb from "./adapters/arangodb.js";
 import * as virtuoso from "./adapters/virtuoso.js";
 import * as couchdb from "./adapters/couchdb.js";
 import * as cassandra from "./adapters/cassandra.js";
+import * as verisimdb from "./adapters/verisimdb.js";
 
 // Registry of all adapters
 const adapters = {
@@ -56,6 +57,7 @@ const adapters = {
   virtuoso,
   couchdb,
   cassandra,
+  verisimdb,
 };
 
 const server = new McpServer({
