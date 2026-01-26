@@ -1,0 +1,16 @@
+// SPDX-License-Identifier: PMPL-1.0-or-later
+// SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
+= License Notes
+
+This project is licensed under the Palimpsest MPL (PMPL-1.0-or-later).
+
+Primary license text:
+
+* link:LICENSE.txt[PMPL-1.0-or-later]
+
+When a registry or platform requires a recognized SPDX license identifier,
+use **MPL-2.0-or-later** in the metadata and include a short note that the
+project follows Palimpsest principles. See:
+
+* https://github.com/hyperpolymath/palimpsest-license[palimpsest-license]
+* https://www.mozilla.org/MPL/2.0/[MPL 2.0]

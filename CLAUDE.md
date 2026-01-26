@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**polyglot-db-mcp** is a unified MCP (Model Context Protocol) server providing access to 18 databases through a single interface. It runs on Deno and exposes database operations as MCP tools.
+**polyglot-db-mcp** is a unified MCP (Model Context Protocol) server providing access to 21 databases through a single interface. It runs on Deno and exposes database operations as MCP tools.
 
 ## Quick Reference
 
@@ -71,7 +71,7 @@ adapters/         — Database-specific adapters
 1. Create `adapters/yourdb.js`
 2. Export: `name`, `description`, `connect()`, `disconnect()`, `isConnected()`, `tools`
 3. Follow existing adapter patterns
-4. Add SPDX header: `// SPDX-License-Identifier: MIT`
+4. Add SPDX header: `// SPDX-License-Identifier: PMPL-1.0-or-later`
 5. Import in `index.js`
 6. Document environment variables in README
 
@@ -81,7 +81,7 @@ Each adapter reads its config from environment variables. See README.md for the 
 
 ## Code Standards
 
-- **License**: MIT with SPDX headers on all source files
+- **License**: PMPL-1.0-or-later with SPDX headers on all source files
 - **Style**: `deno fmt` for formatting
 - **Lint**: `deno lint` for linting
 - **RSR Compliance**: Bronze level (JavaScript instead of type-safe language)

@@ -74,6 +74,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unified meta tools: `db_list`, `db_status`, `db_help`
 - Cross-database `db_copy` tool (placeholder)
 
-[1.2.0]: https://github.com/hyperpolymath/polyglot-db-mcp/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/hyperpolymath/polyglot-db-mcp/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/hyperpolymath/polyglot-db-mcp/releases/tag/v1.0.0
+[1.2.0]: https://github.com/hyperpolymath/poly-db-mcp/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/hyperpolymath/poly-db-mcp/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/hyperpolymath/poly-db-mcp/releases/tag/v1.0.0

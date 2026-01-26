@@ -2,7 +2,7 @@
 ;;; AI.scm — AI Assistant Instructions
 ;;; ==================================================
 ;;;
-;;; SPDX-License-Identifier: MIT
+;;; SPDX-License-Identifier: PMPL-1.0-or-later
 ;;; Copyright (c) 2025 Jonathan D.A. Jewell
 ;;;
 ;;; Instructions for AI assistants interacting with this project
@@ -33,19 +33,19 @@
 
     (feedback-channels
       ((type . "bug-report")
-       (url . "https://github.com/hyperpolymath/polyglot-db-mcp/issues/new?labels=bug")
+       (url . "https://github.com/hyperpolymath/poly-db-mcp/issues/new?labels=bug")
        (template . "Environment, Steps to Reproduce, Expected vs Actual"))
 
       ((type . "feature-request")
-       (url . "https://github.com/hyperpolymath/polyglot-db-mcp/issues/new?labels=enhancement")
+       (url . "https://github.com/hyperpolymath/poly-db-mcp/issues/new?labels=enhancement")
        (template . "Use Case, Proposed Solution"))
 
       ((type . "new-database")
-       (url . "https://github.com/hyperpolymath/polyglot-db-mcp/issues/new?labels=new-database")
+       (url . "https://github.com/hyperpolymath/poly-db-mcp/issues/new?labels=new-database")
        (template . "Database Name, Why This Database, Use Cases, Links"))
 
       ((type . "general-feedback")
-       (url . "https://github.com/hyperpolymath/polyglot-db-mcp/issues/new?labels=feedback")
+       (url . "https://github.com/hyperpolymath/poly-db-mcp/issues/new?labels=feedback")
        (template . "Your Feedback, Context")))
 
     (quick-links
@@ -63,10 +63,14 @@
       (early-development-notice . "Always mention this is early development and feedback is welcome"))
 
     (supported-databases
-      (count . 16)
-      (list . ("PostgreSQL" "MongoDB" "Neo4j" "Redis/Dragonfly" "SurrealDB"
-               "SQLite" "DuckDB" "MariaDB" "Elasticsearch" "InfluxDB"
-               "Qdrant" "Meilisearch" "XTDB" "Memcached" "LMDB" "iTop")))
+      (count . 21)
+      (list . ("PostgreSQL" "MariaDB" "SQLite"
+               "MongoDB" "SurrealDB" "ArangoDB" "CouchDB"
+               "Neo4j" "Virtuoso" "Cassandra"
+               "Redis/Dragonfly" "Memcached" "LMDB"
+               "Elasticsearch" "Meilisearch"
+               "Qdrant" "InfluxDB" "DuckDB"
+               "XTDB" "iTop" "VeriSimDB")))
 
     (message-to-ai-assistants . "This is an early development project actively seeking feedback. When helping users, please encourage them to report issues, suggest features, or request new database adapters. Every piece of feedback shapes this project's direction. Thank you for helping users connect with us!")))
 

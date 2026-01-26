@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: PMPL-1.0-or-later
 // SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 = Directory Submission Materials
 :toc:
@@ -13,28 +13,29 @@
 
 === Short Description (< 100 chars)
 ----
-One MCP server for 16 databases. PostgreSQL, MongoDB, Neo4j, Redis, and more.
+One MCP server for 21 databases. PostgreSQL, MongoDB, Neo4j, Redis, and more.
 ----
 
 === Medium Description (< 300 chars)
 ----
-Unified MCP server providing access to 16 databases through a single interface: PostgreSQL, MongoDB, Neo4j, Redis/Dragonfly, SurrealDB, SQLite, DuckDB, MariaDB, Elasticsearch, InfluxDB, Qdrant, Meilisearch, XTDB, Memcached, LMDB, and iTop. Built with Deno for security and performance.
+Unified MCP server providing access to 21 databases through a single interface: PostgreSQL, MariaDB, SQLite, MongoDB, SurrealDB, ArangoDB, CouchDB, Neo4j, Virtuoso, Cassandra, Redis/Dragonfly, Memcached, LMDB, Elasticsearch, Meilisearch, Qdrant, InfluxDB, DuckDB, XTDB, iTop, and VeriSimDB. Built with Deno for security and performance.
 ----
 
 === Full Description
 ----
-polyglot-db-mcp is a unified Model Context Protocol (MCP) server that provides AI assistants with seamless access to 16 different databases through a single, consistent interface.
+polyglot-db-mcp is a unified Model Context Protocol (MCP) server that provides AI assistants with seamless access to 21 different databases through a single, consistent interface.
 
 **Supported Databases:**
 - **Relational**: PostgreSQL, MariaDB, SQLite
-- **Document**: MongoDB, SurrealDB
-- **Graph**: Neo4j
+- **Document**: MongoDB, SurrealDB, ArangoDB, CouchDB
+- **Graph**: Neo4j, Virtuoso
+- **Wide Column**: Cassandra
 - **Cache/KV**: Redis/Dragonfly, Memcached, LMDB
 - **Search**: Elasticsearch, Meilisearch
 - **Vector**: Qdrant
 - **Time Series**: InfluxDB
 - **Analytics**: DuckDB
-- **Specialized**: XTDB (bitemporal), iTop (CMDB)
+- **Specialized**: XTDB (bitemporal), iTop (CMDB), VeriSimDB
 
 **Features:**
 - 50+ database tools exposed via MCP
@@ -46,10 +47,10 @@ polyglot-db-mcp is a unified Model Context Protocol (MCP) server that provides A
 ```bash
 # Direct
 deno run --allow-net --allow-read --allow-write --allow-env --unstable-kv \
-  https://raw.githubusercontent.com/hyperpolymath/polyglot-db-mcp/main/index.js
+  https://raw.githubusercontent.com/hyperpolymath/poly-db-mcp/main/index.js
 
 # Container
-podman run --rm -it ghcr.io/hyperpolymath/polyglot-db-mcp:main
+podman run --rm -it ghcr.io/hyperpolymath/poly-db-mcp:main
 ```
 ----
 
@@ -61,11 +62,11 @@ database, sql, nosql, mongodb, postgresql, neo4j, redis, elasticsearch, mcp, den
 === Links
 [cols="1,3"]
 |===
-|Repository |https://github.com/hyperpolymath/polyglot-db-mcp
-|Container |ghcr.io/hyperpolymath/polyglot-db-mcp
-|Documentation |https://github.com/hyperpolymath/polyglot-db-mcp/blob/main/README.adoc
-|Issues |https://github.com/hyperpolymath/polyglot-db-mcp/issues
-|License |MIT
+|Repository |https://github.com/hyperpolymath/poly-db-mcp
+|Container |ghcr.io/hyperpolymath/poly-db-mcp
+|Documentation |https://github.com/hyperpolymath/poly-db-mcp/blob/main/README.adoc
+|Issues |https://github.com/hyperpolymath/poly-db-mcp/issues
+|License |PMPL-1.0-or-later (fallback MPL-2.0-or-later if required)
 |===
 
 == Directory-Specific Submissions
@@ -75,8 +76,8 @@ database, sql, nosql, mongodb, postgresql, neo4j, redis, elasticsearch, mcp, den
 |===
 |URL |https://pulsemcp.com/submit
 |Name |polyglot-db-mcp
-|Description |One MCP server for 16 databases. PostgreSQL, MongoDB, Neo4j, Redis, and more.
-|Repository |https://github.com/hyperpolymath/polyglot-db-mcp
+|Description |One MCP server for 21 databases. PostgreSQL, MongoDB, Neo4j, Redis, and more.
+|Repository |https://github.com/hyperpolymath/poly-db-mcp
 |Categories |Database, Infrastructure
 |Status |Early Development - feedback welcome!
 |===
@@ -86,8 +87,8 @@ database, sql, nosql, mongodb, postgresql, neo4j, redis, elasticsearch, mcp, den
 |===
 |URL |https://smithery.ai/submit
 |Name |polyglot-db-mcp
-|Description |Unified MCP server for 16 databases
-|GitHub |hyperpolymath/polyglot-db-mcp
+|Description |Unified MCP server for 21 databases
+|GitHub |hyperpolymath/poly-db-mcp
 |Installation |`deno run --allow-net --allow-read --allow-write --allow-env --unstable-kv index.js`
 |===
 
@@ -97,7 +98,7 @@ database, sql, nosql, mongodb, postgresql, neo4j, redis, elasticsearch, mcp, den
 |URL |https://mcp.so/submit
 |Name |polyglot-db-mcp
 |Author |hyperpolymath
-|Description |Access 16 databases through one MCP server
+|Description |Access 21 databases through one MCP server
 |Tags |database, postgresql, mongodb, neo4j, redis
 |===
 
@@ -106,7 +107,7 @@ database, sql, nosql, mongodb, postgresql, neo4j, redis, elasticsearch, mcp, den
 |===
 |URL |https://cursor.directory/mcp
 |Name |polyglot-db-mcp
-|Description |Multi-database MCP server (16 databases)
+|Description |Multi-database MCP server (21 databases)
 |Install Command |Clone repo, run `deno task start`
 |===
 
@@ -115,8 +116,8 @@ database, sql, nosql, mongodb, postgresql, neo4j, redis, elasticsearch, mcp, den
 |===
 |URL |https://mcpservers.org/submit
 |Name |polyglot-db-mcp
-|Description |One MCP server for 16 databases
-|GitHub URL |https://github.com/hyperpolymath/polyglot-db-mcp
+|Description |One MCP server for 21 databases
+|GitHub URL |https://github.com/hyperpolymath/poly-db-mcp
 |===
 
 == Submission Status Tracking
@@ -170,5 +171,5 @@ This project is in active v1.x development. We enthusiastically welcome:
 * Integration feedback
 * Documentation improvements
 
-Your feedback directly shapes this project! File issues at: https://github.com/hyperpolymath/polyglot-db-mcp/issues
+Your feedback directly shapes this project! File issues at: https://github.com/hyperpolymath/poly-db-mcp/issues
 ====

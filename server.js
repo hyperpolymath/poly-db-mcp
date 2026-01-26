@@ -1,5 +1,5 @@
 #!/usr/bin/env -S deno run --allow-net --allow-read --allow-write --allow-env
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: PMPL-1.0-or-later
 // SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 
 /**
@@ -70,7 +70,7 @@ const adapters = {
 
 const PACKAGE_VERSION = "1.2.0";
 const FEEDBACK_URL =
-  "https://github.com/hyperpolymath/polyglot-db-mcp/issues";
+  "https://github.com/hyperpolymath/poly-db-mcp/issues";
 
 /**
  * Create and configure the MCP server with all tools
@@ -526,7 +526,7 @@ async function startHttpMode(server) {
           protocolVersion: "2025-06-18",
           endpoint: "/mcp",
           databases: Object.keys(adapters),
-          documentation: "https://github.com/hyperpolymath/polyglot-db-mcp",
+          documentation: "https://github.com/hyperpolymath/poly-db-mcp",
         }),
         {
           headers: { "Content-Type": "application/json" },

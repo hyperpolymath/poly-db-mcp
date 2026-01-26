@@ -1,5 +1,5 @@
 #!/usr/bin/env -S deno run --allow-net --allow-read --allow-write --allow-env
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: PMPL-1.0-or-later
 // SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 
 /**
@@ -240,7 +240,7 @@ for (const [adapterName, adapter] of Object.entries(adapters)) {
           ],
         };
       } catch (error) {
-        const feedbackUrl = `https://github.com/hyperpolymath/polyglot-db-mcp/issues/new?title=${encodeURIComponent(`[BUG] ${toolName}: ${error.message.substring(0, 50)}`)}&labels=bug&body=${encodeURIComponent(`## Error Details\n- **Tool**: ${toolName}\n- **Adapter**: ${adapterName}\n- **Error**: ${error.message}\n\n## Environment\n- OS: \n- Deno version: \n\n## Steps to Reproduce\n1. \n\n## Additional Context\n`)}`;
+        const feedbackUrl = `https://github.com/hyperpolymath/poly-db-mcp/issues/new?title=${encodeURIComponent(`[BUG] ${toolName}: ${error.message.substring(0, 50)}`)}&labels=bug&body=${encodeURIComponent(`## Error Details\n- **Tool**: ${toolName}\n- **Adapter**: ${adapterName}\n- **Error**: ${error.message}\n\n## Environment\n- OS: \n- Deno version: \n\n## Steps to Reproduce\n1. \n\n## Additional Context\n`)}`;
         return {
           content: [
             {
