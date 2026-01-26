@@ -1,5 +1,4 @@
-image:https://img.shields.io/badge/License-PMPL--1.0-blue.svg[License: PMPL-1.0,link="https://github.com/hyperpolymath/palimpsest-license"]
-image:https://img.shields.io/badge/Philosophy-Palimpsest-indigo.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-license"]
+image:https://img.shields.io/badge/License-PMPL--1.0--or--later-indigo.svg[License: PMPL-1.0-or-later,link="https://github.com/hyperpolymath/palimpsest-license"]
 
 
 // SPDX-License-Identifier: PMPL-1.0-or-later
@@ -11,9 +10,9 @@ image:https://img.shields.io/badge/Philosophy-Palimpsest-indigo.svg[Palimpsest,l
 :icons: font
 :source-highlighter: rouge
 
-*One MCP server. 20 databases. Zero context switching.*
+*One MCP server. 21 databases. Zero context switching.*
 
-Query PostgreSQL, MongoDB, Neo4j, Elasticsearch, Redis, and 15 more databases through a single unified interface. Built with ReScript, runs on Deno.
+Query PostgreSQL, MongoDB, Neo4j, Elasticsearch, Redis, and 16 more databases through a single unified interface. Built with ReScript, runs on Deno.
 
 image:https://img.shields.io/badge/Runtime-Deno-black.svg[Runtime: Deno,link=https://deno.land]
 image:https://img.shields.io/badge/Language-ReScript-red.svg[Language: ReScript,link=https://rescript-lang.org]
@@ -37,13 +36,21 @@ Store this embedding in Qdrant and link it to the Neo4j knowledge graph
 
 == Installation
 
-=== Option A: Direct (Recommended for development)
+=== Option A: Direct (no clone)
+
+[source,bash]
+----
+deno run --allow-net --allow-read --allow-write --allow-env --unstable-kv \
+  https://raw.githubusercontent.com/hyperpolymath/poly-db-mcp/main/index.js
+----
+
+=== Option B: Local clone (Recommended for development)
 
 [source,bash]
 ----
 # Clone the repository
-git clone https://github.com/hyperpolymath/polyglot-db-mcp.git
-cd polyglot-db-mcp
+git clone https://github.com/hyperpolymath/poly-db-mcp.git
+cd poly-db-mcp
 
 # Add to Claude Code
 claude mcp add polyglot-db -- deno run \
@@ -51,7 +58,7 @@ claude mcp add polyglot-db -- deno run \
   $(pwd)/server.js
 ----
 
-=== Option B: Container (Recommended for production)
+=== Option C: Container (Recommended for production)
 
 [source,bash]
 ----
@@ -59,20 +66,20 @@ claude mcp add polyglot-db -- deno run \
 nerdctl run -d --name polyglot-db \
   -e POSTGRES_HOST=host.docker.internal \
   -e MONGODB_URL=mongodb://host.docker.internal:27017 \
-  ghcr.io/hyperpolymath/polyglot-db-mcp:latest
+  ghcr.io/hyperpolymath/poly-db-mcp:latest
 
 # Using podman
 podman run -d --name polyglot-db \
   -e POSTGRES_HOST=host.containers.internal \
-  ghcr.io/hyperpolymath/polyglot-db-mcp:latest
+  ghcr.io/hyperpolymath/poly-db-mcp:latest
 
 # Using docker
 docker run -d --name polyglot-db \
   -e POSTGRES_HOST=host.docker.internal \
-  ghcr.io/hyperpolymath/polyglot-db-mcp:latest
+  ghcr.io/hyperpolymath/poly-db-mcp:latest
 ----
 
-=== Option C: Deno Deploy (Serverless / HTTP Mode)
+=== Option D: Deno Deploy (Serverless / HTTP Mode)
 
 Polyglot DB MCP supports the MCP Streamable HTTP transport (June 2025 spec) for cloud deployment:
 
@@ -219,7 +226,7 @@ kill $SERVER_PID
 |No errors, listens on stdio (or HTTP port)
 
 |db_list works
-|Returns list of 20 supported databases
+|Returns list of 21 supported databases
 
 |db_status works
 |Shows which databases have valid connections
@@ -737,9 +744,11 @@ https://github.com/hyperpolymath/formbd[FormBD] is a narrative-first, reversible
 
 == License
 
-*Dual-licensed:* link:LICENSE.txt[MIT] OR link:LICENSE.txt[PMPL-1.0-or-later] — your choice.
+*Primary:* link:LICENSE.txt[PMPL-1.0-or-later] (Palimpsest MPL).
 
-We encourage (but don't require) layering the https://github.com/hyperpolymath/palimpsest-license[Palimpsest License] for ethical AI development practices.
+*Fallback for registries that require a recognized SPDX license:* use **MPL-2.0-or-later** in metadata and add a short note that the project follows Palimpsest principles (see https://github.com/hyperpolymath/palimpsest-license[palimpsest-license]).
+
+See link:LICENSE-NOTES.adoc[LICENSE-NOTES.adoc] for registry guidance.
 
 © 2025 Jonathan D.A. Jewell (https://github.com/hyperpolymath[@hyperpolymath])
 

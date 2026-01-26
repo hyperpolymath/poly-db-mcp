@@ -1,7 +1,7 @@
 {
   "name": "polyglot-db-mcp",
   "version": "1.2.0",
-  "description": "Unified MCP server for multiple databases - 20 databases via MCP protocol",
+  "description": "Unified MCP server for multiple databases - 21 databases via MCP protocol",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "keywords": ["mcp", "database", "polyglot", "deno", "rescript"],
   "author": "Jonathan D.A. Jewell",
-  "license": "MIT",
+  "license": "PMPL-1.0-or-later",
   "devDependencies": {
     "rescript": "^12.0.2"
   },

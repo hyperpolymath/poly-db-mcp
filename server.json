@@ -2,12 +2,12 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
   "name": "io.github.hyperpolymath/poly-db-mcp",
   "title": "Polyglot Database MCP",
-  "description": "Unified MCP for 20 databases: SurrealDB, ArangoDB, Virtuoso, CouchDB, Cassandra, and more",
+  "description": "Unified MCP for 21 databases: SurrealDB, ArangoDB, Virtuoso, CouchDB, Cassandra, and more",
   "repository": {
     "url": "https://github.com/hyperpolymath/poly-db-mcp",
     "source": "github"
   },
-  "version": "1.0.0",
+  "version": "1.3.0",
   "packages": [
     {
       "registryType": "oci",

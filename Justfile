@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: PMPL-1.0-or-later
 # SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 # polyglot-db-mcp justfile
 
@@ -51,7 +51,7 @@ audit-licence:
 info:
     @echo "polyglot-db-mcp - Unified MCP server for multiple databases"
     @echo "Runtime: Deno"
-    @echo "License: MIT"
+    @echo "License: PMPL-1.0-or-later"
     @echo "Databases: 11 supported"
 
 # List supported databases

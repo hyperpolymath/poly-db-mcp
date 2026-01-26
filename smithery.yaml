@@ -1,13 +1,13 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: PMPL-1.0-or-later
 # SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 # Smithery configuration for polyglot-db-mcp
 
 name: polyglot-db-mcp
-description: Unified MCP server for 16 databases - PostgreSQL, MongoDB, Neo4j, Redis, and more
-version: 1.1.0
+description: Unified MCP server for 21 databases - PostgreSQL, MongoDB, Neo4j, Redis, and more
+version: 1.3.0
 author: hyperpolymath
-license: MIT
-repository: https://github.com/hyperpolymath/polyglot-db-mcp
+license: PMPL-1.0-or-later
+repository: https://github.com/hyperpolymath/poly-db-mcp
 
 # Runtime configuration
 runtime: deno
