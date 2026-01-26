@@ -1,4 +1,4 @@
-;; SPDX-License-Identifier: AGPL-3.0-or-later
+;; SPDX-License-Identifier: PMPL-1.0-or-later
 ;; ECOSYSTEM.scm - Project ecosystem positioning
 
 (ecosystem
@@ -17,7 +17,7 @@
         ((relationship . sibling-standard)
          (description . "RSR compliance framework")))
 
-      (gitvisor
+      (git-hud
         ((relationship . infrastructure)
          (description . "Git repository management")))
 
@@ -37,4 +37,9 @@
    (what-this-is-not
      ("Not an ORM or query builder"
       "Not a database itself"
-      "Not a drop-in replacement for direct database clients"))))
+      "Not a drop-in replacement for direct database clients")))
+  (opsm-integration
+    (relationship "core")
+    (description "database adapter layer for OPSM.")
+    (direction "opsm -> poly-db-mcp"))
+)

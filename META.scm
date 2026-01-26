@@ -1,4 +1,4 @@
-;; SPDX-License-Identifier: AGPL-3.0-or-later
+;; SPDX-License-Identifier: PMPL-1.0-or-later
 ;; META.scm - Project metadata and architectural decisions
 
 (define project-meta
@@ -12,3 +12,5 @@
        (documentation . "asciidoc")
        (branching . "trunk-based")))
     (design-rationale . ())))
+
+(define opsm-link "OPSM link: database adapter layer for OPSM.")

@@ -1,8 +1,8 @@
-image:https://img.shields.io/badge/License-MPL_2.0-blue.svg[MPL-2.0,link="https://opensource.org/licenses/MPL-2.0"]
-image:https://img.shields.io/badge/Philosophy-Palimpsest-purple.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-licence"]
+image:https://img.shields.io/badge/License-PMPL--1.0-blue.svg[License: PMPL-1.0,link="https://github.com/hyperpolymath/palimpsest-license"]
+image:https://img.shields.io/badge/Philosophy-Palimpsest-indigo.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-license"]
 
 
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: PMPL-1.0-or-later
 // SPDX-FileCopyrightText: 2025 Jonathan D.A. Jewell
 
 = Polyglot DB MCP
@@ -686,7 +686,7 @@ Create `src/adapters/YourDb.res`:
 
 [source,rescript]
 ----
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: PMPL-1.0-or-later
 open Adapter
 
 let name = "yourdb"
@@ -742,3 +742,14 @@ https://github.com/hyperpolymath/formbd[FormBD] is a narrative-first, reversible
 We encourage (but don't require) layering the https://github.com/hyperpolymath/palimpsest-license[Palimpsest License] for ethical AI development practices.
 
 © 2025 Jonathan D.A. Jewell (https://github.com/hyperpolymath[@hyperpolymath])
+
+== OPSM Link
+
+[source]
+----
+OPSM Core
+  |
+  v
+poly-db-mcp (database adapter layer for OPSM)
+
+----
